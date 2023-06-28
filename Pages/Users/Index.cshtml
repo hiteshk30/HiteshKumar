@@ -1,0 +1,74 @@
+﻿@page
+@model RegistrationForm1.Pages.Users.IndexModel
+@{
+    ViewData["Title"] = "User Details";
+}
+
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script type="text/javascript">
+
+    function deleteUser(id) {
+        if (confirm("Are you sure to delete this user?")) {
+            //alert(id);
+            $.ajax({
+                type: "POST",
+                //async: false,
+                url: "/Users/Index?handler=DeleteUser",
+                data: {
+                    userId: id
+                },
+                success: function () {
+                    window.location.reload();
+
+                }
+
+            });
+        }
+        return false;
+
+    }
+
+    $(document).ready(function () {
+
+        });
+
+</script>
+
+
+
+<br/>
+<h2>User List</h2>
+<a class="btn btn-primary btn-sm" href="/Users/Create">ADD</a>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Id</th>
+        <th>Name</th>
+    <th>Email</th>
+    <th>Phone</th>
+    <th>Address</th>
+    <th>State</th>
+    <th>City</th>
+    <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var item in Model.listUsers){
+            <tr>
+                <td>@item.Id</td>
+                <td>@item.Name</td>
+                <td>@item.Email</td>
+                <td>@item.Phone</td>
+                <td>@item.Address</td>
+                <td>@item.State</td>
+                <td>@item.City</td>
+                <td>
+                    <a class="btn btn-primary btn-sm" href="/Users/Edit?Id=@item.Id">Edit</a>
+                    <button type="submit" class="btn btn-danger btn-sm" onclick="deleteUser(@item.Id)">Delete</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+

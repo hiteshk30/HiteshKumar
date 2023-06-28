@@ -1,0 +1,160 @@
+﻿@page
+@model RegistrationForm1.Pages.Users.CreateModel
+@{
+    ViewData["Title"] = "Register User";
+}
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script type="text/javascript">
+    //function check(){
+    //    if (document.getElementById("cbAgree").ariaChecked == true) {
+    //        document.getElementById("btnSubmit").ariaDisabled = false;
+    //    }
+    //    else{
+    //        document.getElementById("btnSubmit").ariaDisabled = true;
+    //    }
+    //}
+    //window.onload = function(){
+    //    alert("hitesh");
+    //}
+
+    $(document).ready(function(){
+        $('#cbAgree').click(function () {
+            if ($(this).is(':checked')) {
+                $('#btnSubmit').removeAttr("disabled");
+                
+            } else {
+                $('#btnSubmit').attr("disabled", "true");
+            }
+        });
+
+            $('#state').change(function(){
+                var Id = $(this).val();
+                if(Id == 1){
+                var newOptions = {
+                    "Surat": "1",
+                    "Bardoli": "2",
+                    "Baroda": "3"
+                };
+            }
+            else {
+                var newOptions = {
+                    "Mumbai": "4",
+                    "Pune": "5",
+                };
+            }
+
+                var $el = $("#city");
+                $el.empty(); // remove old options
+                $.each(newOptions, function (key, value) {
+                    $el.append($("<option></option>")
+                        .attr("value", value).text(key));
+                });
+               
+
+            });
+
+            
+        
+    
+
+    
+
+});
+
+</script>
+
+<br />
+<h2>Register New User</h2>
+
+@if(Model.errorMessage.Length>0){
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <strong>@Model.errorMessage</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>    
+    </div>
+}
+
+<form method="post">
+    <div class="row mb-3">
+        <label class="col-sm-3 col-form-label"><span style="color:#ff0000">*</span> Name</label>
+        <div class="col-sm-6">
+            <input type="text" class="form-control" name="name" value="@Model.userInfo.Name" />
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <label class="col-sm-3 col-form-label"><span style="color:#ff0000">*</span> Email</label>
+        <div class="col-sm-6">
+            <input type="text" class="form-control" name="email" value="@Model.userInfo.Email" />
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <label class="col-sm-3 col-form-label">Phone</label>
+        <div class="col-sm-6">
+            <input type="number" class="form-control" name="phone" value="@Model.userInfo.Phone" />
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <label class="col-sm-3 col-form-label">Address</label>
+        <div class="col-sm-6">
+            <input type="text" class="form-control" name="address" value="@Model.userInfo.Address" />
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <label class="col-sm-3 col-form-label"><span style="color:#ff0000">*</span> State</label>
+        <div class="col-sm-6">
+            <select name="state" id="state">
+                <option value="" disabled selected>Select State</option>
+                <option value="1">Gujrat</option>
+                <option value="2">Maharastra</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <label class="col-sm-3 col-form-label"><span style="color:#ff0000">*</span> City</label>
+                <div class="col-sm-6">
+            <select name="city" id="city">
+                
+              @*  <option value="1">Surat</option>
+                <option value="2">Bardoli</option>
+                <option value="3">Baroda</option>
+                <option value="4">Mumbai</option>
+                <option value="5">Pune</option>*@
+            </select>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <label class="col-sm-3 col-form-label">Agree</label>
+        <div class="col-sm-6">
+            <input type="checkbox" id="cbAgree" name="agree"/>
+        </div>
+    </div>
+
+    @if (Model.successMessage.Length > 0)
+    {
+        <div class="row mb-3">
+            <div class="col-sm-9">
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>@Model.successMessage</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+            </div>
+        </div>
+    }
+
+    <div class="row mb-3">
+        <div class="offset-sm-3 col-sm-3 d-grid">
+            <button type="submit" class="btn btn-primary" id="btnSubmit" name="submit" disabled>Submit</button>
+        </div>
+        <div class="col-sm-3 d-grid">
+            <a class="btn btn-outline-primary" href="/" role="button">Cancel</a>
+        </div>
+    </div>
+</form>
+
+
+

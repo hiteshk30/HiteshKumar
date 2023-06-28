@@ -1,0 +1,202 @@
+﻿@page
+@model RegistrationForm1.Pages.Users.EditModel
+@{
+    ViewData["Title"] = "Edit User";
+}
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script type="text/javascript">
+       
+    $(document).ready(function () {
+        //var idd = @Html.Raw(Json.Serialize(@Model.userInfo.Id));
+        //alert(idd);
+        //var namee = @Html.Raw(Json.Serialize(@Model.userInfo.Name));
+        //var phonee = @Html.Raw(Json.Serialize(@Model.userInfo.Phone));
+        //var addresse = @Html.Raw(Json.Serialize(@Model.userInfo.Address));
+        //var statee = @Html.Raw(Json.Serialize(@Model.userInfo.State));
+        //var citye = @Html.Raw(Json.Serialize(@Model.userInfo.City));
+        //alert(namee);
+        //alert(phonee);
+        //alert(addresse);
+        //alert(statee);
+        //alert(citye);
+
+        var state = @Html.Raw(Json.Serialize(@Model.userInfo.State));
+       // alert(state);
+        if (state == "Gujrat") {
+            var stateid = 1;
+        }
+        else if(state == "Maharastra"){
+            var stateid = 2;
+        }
+        $('#state').val(stateid);
+        if (stateid == 1) {
+                var newOptions = {
+                    "Surat": "1",
+                    "Bardoli": "2",
+                    "Baroda": "3"
+                };
+            }
+            else {
+                var newOptions = {
+                    "Mumbai": "4",
+                    "Pune": "5",
+                };
+            }
+
+            var $el = $("#city");
+            $el.empty(); // remove old options
+            $.each(newOptions, function (key, value) {
+                $el.append($("<option></option>")
+                    .attr("value", value).text(key));
+            });
+
+        var city = @Html.Raw(Json.Serialize(@Model.userInfo.City));
+        if (city == "Surat") {
+            var cityid = 1;
+        }
+        else if (city == "Bardoli") {
+            var cityid = 2;
+        }
+        else if (city == "Baroda") {
+            var cityid = 3;
+        }
+        else if (city == "Mumbai") {
+            var cityid = 4;
+        }
+        else if (city == "Pune") {
+            var cityid = 5;
+        }
+        $('#city').val(cityid);
+        let st = parseInt(state);
+        let ct = parseInt(city);
+
+        if(Number.isInteger(st)){
+            $('#state').val(st);
+        }
+        if (Number.isInteger(ct)) {
+            $('#city').val(ct);
+        }
+    
+        $('#state').change(function () {
+            var Id = $(this).val();
+            if (Id == 1) {
+                var newOptions = {
+                    "Surat": "1",
+                    "Bardoli": "2",
+                    "Baroda": "3"
+                };
+            }
+            else {
+                var newOptions = {
+                    "Mumbai": "4",
+                    "Pune": "5",
+                };
+            }
+
+            var $el = $("#city");
+            $el.empty(); // remove old options
+            $.each(newOptions, function (key, value) {
+                $el.append($("<option></option>")
+                    .attr("value", value).text(key));
+            });
+
+
+        });
+
+    });
+
+</script>
+
+
+<br />
+<h2>Edit User Details</h2>
+
+@if (Model.errorMessage.Length > 0)
+{
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        <strong>@Model.errorMessage</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+<form method="post">
+    <input type="hidden" name="Id" value="@Model.userInfo.Id" />
+    <div class="row mb-3">
+        <label class="col-sm-3 col-form-label"><span style="color:#ff0000">*</span> Name</label>
+        <div class="col-sm-6">
+            <input type="text" class="form-control" name="name" value="@Model.userInfo.Name" />
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <label class="col-sm-3 col-form-label"><span style="color:#ff0000">*</span> Email</label>
+        <div class="col-sm-6">
+            <input type="text" class="form-control" name="email" value="@Model.userInfo.Email" />
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <label class="col-sm-3 col-form-label">Phone</label>
+        <div class="col-sm-6">
+            <input type="number" class="form-control" name="phone" value="@Model.userInfo.Phone" />
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <label class="col-sm-3 col-form-label">Address</label>
+        <div class="col-sm-6">
+            <input type="text" class="form-control" name="address" value="@Model.userInfo.Address" />
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <label class="col-sm-3 col-form-label"><span style="color:#ff0000">*</span> State</label>
+       <div class="col-sm-6">
+            <select name="state" id="state">
+                <option value="" disabled selected>Select State</option>
+                <option value="1">Gujrat</option>
+                <option value="2">Maharastra</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <label class="col-sm-3 col-form-label"><span style="color:#ff0000">*</span> City</label>
+        <div class="col-sm-6">
+            <select name="city" id="city">
+
+                <option value="1">Surat</option>
+                <option value="2">Bardoli</option>
+                <option value="3">Baroda</option>
+                <option value="4">Mumbai</option>
+                <option value="5">Pune</option>
+            </select>
+        </div>
+    </div>
+
+    
+
+    @if (Model.successMessage.Length > 0)
+    {
+        <div class="row mb-3">
+            <div class="col-sm-9">
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <strong>@Model.successMessage</strong>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            </div>
+        </div>
+    }
+
+    <div class="row mb-3">
+        <div class="offset-sm-3 col-sm-3 d-grid">
+            <button type="submit" class="btn btn-primary" id="btnSubmitEdit" >Submit</button>
+        </div>
+        <div class="col-sm-3 d-grid">
+            <a class="btn btn-outline-primary" href="/Users" role="button">Cancel</a>
+        </div>
+    </div>
+</form>
+
+
