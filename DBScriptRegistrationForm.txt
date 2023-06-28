@@ -1,0 +1,104 @@
+CREATE table tblUserRegistration(
+ID int not null primary key identity,
+Name varchar(50) not null,
+Email varchar(50) not null,
+Phone varchar(10),
+Address varchar(100),
+StateId int,
+CityId int)
+
+Create table tblState(
+Id int not null primary key,
+StateName varchar(50)
+)
+
+create table tblCity(
+Id int not null primary key,
+StateId int,
+CityName varchar(50)
+)
+
+Insert into tblUserRegistration (Name,Email,Phone,Address,StateId,CityId)
+Values
+('Hitesh Kumar','Hit@gmail.com','1234567890','Raipur',1,1),
+('Kumar Hitesh','Kum@gmail.com','0987654321','Raipur',2,4)
+
+Insert into tblState (Id,StateName)
+values
+(1,'Gujrat'),
+(2,'Maharastra')
+
+Insert into tblCity(Id,StateId,CityName)
+values
+(1,1,'Surat'),
+(2,1,'Bardoli'),
+(3,1,'Baroda'),
+(4,2,'Mumbai'),
+(5,2,'Pune')
+
+use MyLocalDB
+go
+Create procedure USER_S
+as
+Select U.Name,U.Email,U.Phone,U.Address,S.StateName,C.CityName from MyLocalDB.dbo.tblUserRegistration as U, MyLocalDB.dbo.tblState as S, MyLocalDB.dbo.tblCity as C
+Where U.StateId = S.Id and U.CityId = c.Id
+Return
+go
+
+use MyLocalDB
+go
+Create procedure USER_D
+@ID int
+as
+Delete from MyLocalDB.dbo.tblUserRegistration where ID = @ID
+Return
+go
+
+use MyLocalDB
+go
+ALTER procedure USER_U
+@ID int,
+@Name varchar(50),
+@Email varchar(50),
+@Phone varchar(10),
+@Address varchar(100),
+@StateId int,
+@CityId int
+as 
+Update MyLocalDB.dbo.tblUserRegistration 
+set Name = @Name,
+Email = @Email,
+Phone =@Phone,
+Address = @Address,
+StateId = @StateId,
+CityId = @CityId
+where ID = @ID
+return
+go
+
+use MyLocalDB
+go
+Create procedure USER_I
+@Name varchar(50),
+@Email varchar(50),
+@Phone varchar(10),
+@Address varchar(100),
+@StateId int,
+@CityId int
+as 
+Insert into tblUserRegistration (Name,Email,Phone,Address,StateId,CityId)
+Values
+(@Name,@Email,@Phone,@Address,@StateId,@CityId)
+Return 
+go
+
+
+use MyLocalDB
+go
+Create procedure USER_S1
+@ID int
+as
+Select U.Name,U.Email,U.Phone,U.Address,S.StateName,C.CityName from MyLocalDB.dbo.tblUserRegistration as U, MyLocalDB.dbo.tblState as S, MyLocalDB.dbo.tblCity as C
+Where U.StateId = S.Id and U.CityId = c.Id and U.ID = @ID
+Return
+go
